@@ -4,7 +4,7 @@ powerplant_to_fuel = {"gasfired": "gas(euro/MWh)", "turbojet":
     "kerosine(euro/MWh)", "windturbine": "wind(%)"} #mapping of powerplant types to their respective fuel costs
 
 
-def pwr_plt_pq(payload): #adds available powerplants to a priority queue (heap) sort ascending by cost.
+def pwr_plt_pq(payload): #adds available powerplants to a priority queue (heap) sorted ascending by cost.
     result = []
     for pwr_plt in payload["powerplants"]:
         name = pwr_plt["name"]
@@ -24,8 +24,8 @@ def generate_production_plan(payload):
         pwr_plt = heapq.heappop(pq)
         name = pwr_plt[1]
         pwr_efficiency = pwr_plt[2]
-        min_pwr = (pwr_plt[3] * (pwr_efficiency * 100)) / 100
-        max_pwr = (pwr_plt[4] * (pwr_efficiency * 100)) / 100
+        min_pwr = pwr_plt[3] * pwr_efficiency
+        max_pwr = pwr_plt[4] * pwr_efficiency
 
         if min_pwr <= load:
             if max_pwr <= load:  # add full power to load
